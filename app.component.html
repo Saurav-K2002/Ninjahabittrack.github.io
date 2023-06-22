@@ -1,0 +1,225 @@
+<header *ngIf="!auth.userData">
+  <!--Mask-->
+  <div id="intro" class="view">
+
+    <div class="mask ">
+
+      <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+
+        <div class="row d-flex justify-content-center text-center">
+
+          <div class="col-12">
+
+            <h2 class="display-4 font-weight-bold white-text pt-5 mb-2">
+              Habit Tracker
+            </h2>
+
+            <hr class="hr-light" color="white">
+
+            <h4 class="white-text my-4">
+              Become the best version of yourself
+            </h4>
+
+            <button type="button" mdbBtn class="btn btn-outline-white" (click)="auth.googleSignin()" ><i class="fab fa-google mr-2 fa-lg"></i> Sign in with Google</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/Mask-->
+</header>
+
+<div class="container" *ngIf="auth.userData">
+  <br>
+  <div class="row align-items-center">
+    <div class="col ">
+      <h1>Habit Tracker</h1>
+    </div>
+    
+    <div class="col-auto">
+      <img src="{{auth.userData.photoURL}}" class="rounded-circle  img-fluid z-depth-1" alt="{{auth.userData.displayName}}" style="width: 60px">
+    </div>
+
+  </div>
+
+  <hr class="main_title">
+
+  <nav>
+  </nav>
+  <router-outlet></router-outlet>
+  <div class="row">
+    <div class="col text-center" >
+      <button class="button " mdbBtn (click)="auth.signOut()">Sign Out</button>
+    </div>
+  </div>
+<br><br>
+</div>
+
+<main class="mt-5" *ngIf="!auth.userData">
+  <div class="container">
+
+    <!--Section: Best Features-->
+    <section id="best-features" class="text-center">
+      <br>
+      <h2 class="mb-5 font-weight-bold">How does it work?</h2>
+
+      <div class="row d-flex justify-content-center mb-4">
+        <div class="col-md-8">
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-4 mb-1">
+          <i class="fas fa-running fa-4x green-text"></i>
+          <h4 class="my-4 font-weight-bold">Commit</h4>
+          <p class="dark-grey-text">
+            Choose new daily habits
+          </p>
+          <br>
+        </div>
+
+        <div class="col-md-4 mb-1">
+          <i class="fas fa-chart-line fa-4x green-text"></i>
+          <h4 class="my-4 font-weight-bold">Track</h4>
+          <p class="dark-grey-text">
+            Record your progress every day
+          </p>
+          <br>
+        </div>
+
+        <div class="col-md-4 mb-1">
+          <i class="fas fa-user-graduate fa-4x green-text"></i>
+          <h4 class="my-4 font-weight-bold">Sustain</h4>
+          <p class="dark-grey-text">
+            Make sure you don't break the chain!
+          </p>
+        </div>
+      </div>
+
+    </section>
+    <hr class="my-5">
+
+    <!--Section: Examples-->
+    <section id="examples">
+
+      <div class="row justify-content-center align-items-center">
+
+        <div class="col-lg-5 col-md-7 mb-4">
+          <div class="view overlay z-depth-1-half">
+            <img src="https://firebasestorage.googleapis.com/v0/b/habit-tracker-38e6c.appspot.com/o/ht_screenshot.png?alt=media&token=fc1a0e13-c584-4fdd-ba63-d58922ce6f8b" class="img-fluid">
+              <div class="mask rgba-white-slight"> </div>
+          </div>
+
+        </div>
+        
+
+        <div class="col-lg-4 col-md-5 mb-4 col-sm-auto">
+          <h4 class="my-4 font-weight-bold text-center">Easy Habit Tracking</h4>
+          
+            <ul class="dark-grey-text">
+              <li>
+                Track habits that impact many areas of your life
+              </li>
+              <br>
+              <li>
+                Easily check off habits as you complete them
+              </li>
+              <br>
+              <li>
+                Quickly see your progress across all of your habits
+              </li>
+            </ul>
+          <p class="grey-text"></p>
+        </div>
+
+      </div>
+
+    </section>
+    <hr class="my-5">
+
+
+
+  </div>
+</main>
+
+
+
+
+<!-- Footer -->
+<footer class="page-footer unique-color-dark">
+
+  <br>
+    <!--Footer Links-->
+  <div class="container mt-5 mb-4 text-center text-md-left">
+      <div class="row mt-3">
+
+          <!--First column-->
+          <div class="col-md-6 col-lg-3 mb-4">
+              <h6 class="text-uppercase font-weight-bold">
+                  <strong>Get in touch with us</strong>
+              </h6>
+              <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+              <p>We're constantly looking for new ways to help people level up their skills. If you have any ideas or suggestions to improve our products, we'd love to hear from you!</p>
+          </div>
+          <!--/.First column-->
+
+          <!--Second column-->
+          <div class="col-md-6 col-lg-9 mx-auto mb-4 text-left">
+              
+              <div class="container">
+            <!-- Form contact -->
+            <form id="contact-form" name="contact-form" class="p-3 grey-text">
+              
+                <div class="form-row">
+                  <div class="col-lg-6">
+
+                    <div class="md-form form-sm mb-0"> <i class="fas fa-user prefix"></i>
+                      <input mdbInput #nameV type="text" id="name" class="form-control form-control-sm">
+                      <label for="name" class="">Your name</label>
+                    </div>
+                    <div class="md-form form-sm"> <i class="fas fa-envelope prefix"></i>
+                      <input mdbInput #emailV type="text" id="email"  class="form-control form-control-sm">
+                      <label for="email">Your email</label>
+                    </div>
+                    <div class="md-form form-sm"> <i class="fas fa-tag prefix"></i>
+                      <input mdbInput #subjectV type="text" id="subject"  class="form-control form-control-sm">
+                      <label for="subject">Subject</label>
+                    </div>
+            
+                  </div>
+                  <div class="col-lg-6">
+
+                    <div class="md-form form-sm mb-0"> <i class="fas fa-pencil-alt prefix"></i>
+                      <textarea mdbInput #messageV type="text" id="message" class="md-textarea form-control form-control-sm" rows="4"></textarea>
+                      <label for="message">Your message</label>
+                    </div>
+                    
+
+                  </div>
+                </div>
+      
+            <div class="text-right mt-4">
+              <button type="submit" mdbBtn class="btn btn-primary" (click)="sendMail(nameV.value,emailV.value,subjectV.value,messageV.value); nameV.value=''; emailV.value=''; subjectV.value=''; messageV.value=''">Send</button>
+            </div>
+            </form>
+          <!-- Form contact -->
+
+</div>
+
+          </div>
+          <!--/.Second column-->
+
+      </div>
+  </div>
+<!--/.Footer Links-->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">
+      © 2020 Copyright
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
