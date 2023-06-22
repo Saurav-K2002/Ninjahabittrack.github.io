@@ -1,0 +1,136 @@
+<br>
+
+<div *ngIf="auth.userData && habits.length > 0; else noHabits">
+  <h2>{{auth.userData.displayName}}'s Habits</h2>
+</div>
+
+<ng-template #noHabits>
+  <p>
+    <i>
+    You aren't currently tracking any habits. Add a habit below!
+    </i>
+  </p>
+</ng-template>
+
+<ul class="list-group">
+  <li class="list-group-item flex-column align-items-start" *ngFor='let habit of habits' >
+    <div class="row align-items-center">
+      <span class="accordian">
+        <a (click)="test.toggle()" onclick="if(this.innerHTML == '+'){this.innerHTML = '-'}else{this.innerHTML = '+'}" class="habit_title">+</a>
+      </span>
+      <div class="col ">
+        <h5 class="mb-1">
+          <a routerLink="/detail/{{habit.id}}" class="habit_title">
+            {{habit.name}} 
+          </a>
+        </h5>
+      </div>
+      <div class="col-auto justify-content-end ">
+        <span *ngFor='let recent_date of recent_dates'><span *ngIf='recent_date.habit_id === habit.id' [ngClass]="{
+            'round': true, 
+            'incomplete_badge': !recent_date.completed,
+            'complete_badge': recent_date.completed,  
+            'm-1': true}" > 
+          {{recent_date.day_letter}}
+        </span></span>
+        
+        <button mdbBtn type="button" outline="true" class="btn btn-circle btn-sm complete" *ngIf='isComplete(habit); else elseBlock'>
+          <i class="fas fa-check fa-2x"></i>
+        </button>
+
+        <ng-template #elseBlock>
+          <button mdbBtn type="button" outline="true" class="btn btn-circle btn-sm incomplete " (click)="completeHabit(habit)">
+            <i class="fas fa-check fa-2x "></i>
+          </button>
+        </ng-template>
+
+      </div>
+    </div>
+    <div class="mb-1" class="habit_text" mdbCollapse #test="bs-collapse">
+      {{habit.description}} 
+    </div>
+  </li>
+</ul>
+
+<span *ngIf='auth.userData && habits.length > 0'>
+  <br><br>
+</span>
+
+<h2>Add New Habit<button mdbBtn type="button" outline="true" class="btn btn-circle info " data-toggle="modal" data-target="#habitInfo" (click)="frame.show()"><i class="fas fa-info-circle fa-2x"></i></button></h2>
+
+<ul class="list-group">
+  <li class="list-group-item flex-column align-items-start" >
+
+<!-- Material form group -->
+<form>
+  <!-- Grid row -->
+  <div class="form-row">
+    <!-- Grid column -->
+    <div class="col-sm">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInput #habitNameV type="text" class="form-control" id="habitName">
+        <label for="habitName">Habit Name</label>
+      </div>
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <textarea mdbInput #habitDescriptionV type="text" class="md-textarea form-control" rows="1" id="habitDescription" length="120" mdbCharCounter aria-describedby="habitDescriptionBlock"></textarea>
+        <label for="habitDescription">Details</label>
+        <small id="habitDescriptionBlock" class="form-text text-muted">
+          <i>Try: "I will [BEHAVIOR] at [TIME] in [LOCATION]"</i>
+        </small>
+      </div>
+    </div>
+    <!-- Grid column -->
+    <div class="col-auto align-self-end">
+      <button type="submit" mdbBtn class="square_button" (click)="addHabit(habitNameV.value,habitDescriptionV.value); habitNameV.value=''; habitDescriptionV.value=''">Add</button><br><br>
+    </div>
+  </div>
+</form>
+<!-- Material form group -->
+</li>
+</ul>
+<br>
+
+<div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead grey-text">How to Create Effective Habits</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-full">
+          <ul class="fa-ul">
+            <li class="my-3">
+              <i class="fas fa-check fa-sm white-text round modal_check mr-2"></i>Name your habit: <i>Write Daily</i>
+            </li>
+            <li class="my-3">
+              <i class="fas fa-check fa-sm white-text round modal_check mr-2"></i>Be detailed: <i>I will write 200 words, after dinner, sitting in my living room</i>
+            </li>
+            <li class="my-3">
+              <i class="fas fa-check fa-sm white-text round modal_check mr-2"></i>Make it easy and stick to it!
+            </li>
+            <li class="my-3">
+              <i class="fas fa-check fa-sm white-text round modal_check mr-2"></i>Learn more about effective habits at <a class="modal_link" href="https://jamesclear.com/" target="_blank">jamesclear.com</a>. (For a quick summary, check out their <a class="modal_link" href="https://s3.amazonaws.com/jamesclear/Atomic+Habits/Habits+Cheat+Sheet.pdf" target="_blank">Habits Cheat Sheet</a>.)
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" mdbBtn color="green" outline="true" class="waves-effect" mdbWavesEffect (click)="frame.hide()">Got it</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
